@@ -969,6 +969,55 @@
                         <groupId>pl.project13.maven</groupId>
                         <artifactId>git-commit-id-plugin</artifactId>
                     </plugin>
+                    <!-- @TJ Azure custom deployment starts here -->
+                    <plugin>
+                        <groupId>com.microsoft.azure</groupId>
+                        <artifactId>azure-webapp-maven-plugin</artifactId>
+                        <!-- check Maven Central for the latest version -->
+                        <version>1.7.0</version>
+                        <configuration>
+                            <schemaVersion>v2</schemaVersion>
+<!--                            <authentication>-->
+<!--                                <serverId>${AZURE_AUTH}</serverId>-->
+<!--                            </authentication>-->
+<!--                            <resourceGroup>RG2</resourceGroup>-->
+                            <resourceGroup>RG1</resourceGroup>
+                            <appName>jhipster-sample-application1</appName>
+                            <!--                            <appName>jhipster-sample-app1</appName>-->
+                            <runtime>
+<!--                                <os>windows</os>-->
+                                <os>linux</os>
+<!--                                <javaVersion>1.8.0_111</javaVersion>-->
+                                <javaVersion>jre8</javaVersion>
+<!--                                <webContainer>tomcat 8.5</webContainer>-->
+                            </runtime>
+                            <pricingTier>F1</pricingTier>
+                            <region>Central US</region>
+                            <appSettings>
+                                <property>
+                                    <!-- Tell Azure which port you want to use, required for springboot
+                                       jar applications -->
+                                    <name>PORT</name>
+                                    <value>80</value>
+                                </property>
+                                <!--JVM OPTIONS
+                                <property>
+                                    <name>JAVA_OPTS</name>
+                                    <value>-Xmx512m -Xms512m</value>
+                                </property>-->
+                            </appSettings>
+                            <deployment>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.basedir}/target</directory>
+                                        <includes>
+                                            <include>${project.build.finalName}.jar</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </deployment>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
             <properties>
